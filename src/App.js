@@ -1,24 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
+import { Switch, Route, Redirect } from 'react-router-dom';
+import jwt_decode from 'jwt-decode';
+import setAuthToken from './utils/setAuthToken';
 import './App.css';
+//import components
+import Signup from './components/user/Signup';
+import Login from './components/user/Login';
+import Profile from './components/user/Profile';
+import Welcome from './components/user/Welcome';
+
+const PrivateRoute = ({ component: Component, ...rest }) => {
+  const user = localStorage.getItem('jwtToken');
+  return <Route {...rest}render={(props) => {
+    return user ? <Component {...rest} {...props}/> :<Redirect to="/login" />
+  }} />
+}
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>This is the homepage</h1>
     </div>
   );
 }
