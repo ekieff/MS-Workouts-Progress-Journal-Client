@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import EditForm from './EditForm';
 import axios from 'axios';
 const REACT_APP_SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
@@ -79,7 +78,7 @@ const Profile = (props) => {
 	return (
 		<div>
 			<div>{props.user ? userData : errorDiv}</div>
-			<EditForm user={props.user} />
+			<h1>User's profile</h1>
 		</div>
 	);
 };
