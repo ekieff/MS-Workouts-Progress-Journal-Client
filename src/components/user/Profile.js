@@ -1,86 +1,48 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-const REACT_APP_SERVER_URL = process.env.REACT_APP_SERVER_URL;
+import React, { Component } from 'react'
+import jwt_decode from 'jwt-decode'
 
-const Profile = (props) => {
-	let [currentForm, setForm] = useState('Edit User');
-	let [user, setUser] = useState('');
-	let [userId, setUserId] = useState('');
-    console.log({ props });
-    
-	const userData = props.user ? (
-		<div>
-			<h1>Profile</h1>
-            <div className="hikesList">
-			<p>
-				{user.name} info:
-			</p>
-			<p>
-				<strong>Email:</strong> {props.user.email}
-			</p>
-			{/* <p className="id" name="id">
-				<strong>ID:</strong> {props.user.id}
-			</p> */}
-			<p>
-				<strong>Longitude:</strong> {user.longitude}
-			</p>
-			<p>
-				<strong>Latitude:</strong> {user.latitude}
-			</p>
-			<p>
-				<strong>Distance from Trails:</strong> {user.radiusTrail}
-			</p>
-            </div>
-			{/* <input
-				type="button"
-				onClick={() =>
-					({ currentForm } = 'Edit User')
-						? (setForm((currentForm = 'Cancel')), console.log({ currentForm }))
-						: (setForm((currentForm = 'Edit User')),
-						console.log({ currentForm }))
-				}
-				value={currentForm}
-			/> */}
-		</div>
-	) : (
-		<h4>Loading...</h4>
-	);
+class Profile extends Component {
+  constructor() {
+    super()
+    this.state = {
+      name: '',
+      email: '',
+      errors: {}
+    }
+  }
 
+  componentDidMount() {
+    const token = localStorage.usertoken
+    const decoded = jwt_decode(token)
+    this.setState({
+      name: decoded.name,
+      email: decoded.email
+    })
+  }
 
-	const errorDiv = () => {
-		return (
-			<div className="text-center pt-4">
-				<h3>
-					Please <Link to="/login">login</Link> to view this page
-				</h3>
-			</div>
-		);
-	};
+  render() {
+    return (
+      <div className="container">
+        <div className="jumbotron mt-5">
+          <div className="col-sm-8 mx-auto">
+            <h1 className="text-center">PROFILE</h1>
+          </div>
+          <table className="table col-md-6 mx-auto">
+            <tbody>
+              <tr>
+                <td>Name</td>
+                <td>{this.state.name}</td>
+              </tr>
+              <tr>
+                <td>Email</td>
+                <td>{this.state.email}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    )
+  }
+}
 
-	const getUserData = async () => {
-		console.log(props.user.id);
-		try {
-			const res = await axios.post(
-				`${REACT_APP_SERVER_URL}/api/users/profile/get`,
-				{ _id: props.user.id }
-			);
-			setUser(res.data);
-		} catch (e) {
-			console.log(e);
-		}
-	};
-
-	useEffect(() => {
-		getUserData();
-	}, [props.user.id]);
-
-	return (
-		<div>
-			<div>{props.user ? userData : errorDiv}</div>
-			<h1>User's profile</h1>
-		</div>
-	);
-};
-
-export default Profile;
+export default Profile

@@ -1,77 +1,89 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { Redirect } from 'react-router-dom';
-const REACT_APP_SERVER_URL = process.env.REACT_APP_SERVER_URL;
+import React, { Component } from 'react'
+import { register } from './UserFunctions'
 
-const Signup = () => {
-    let [name, setName] = useState('');
-    let [email, setEmail] = useState('');
-    let [password, setPassword] = useState('');
-    let [confirmPassword, setConfirmPassword] = useState('');
-    let [redirect, setRedirect] = useState(false);
-
-    const handleName = (e) => {
-        setName(e.target.value);
+class Register extends Component {
+  constructor() {
+    super()
+    this.state = {
+      name: '',
+      email: '',
+      password: '',
+      errors: {}
     }
 
-    const handleEmail = (e) => {
-        setEmail(e.target.value);
+    this.onChange = this.onChange.bind(this)
+    this.onSubmit = this.onSubmit.bind(this)
+  }
 
+  onChange(e) {
+    this.setState({ [e.target.name]: e.target.value })
+  }
+  onSubmit(e) {
+    e.preventDefault()
+
+    const newUser = {
+      name: this.state.name,
+      email: this.state.email,
+      password: this.state.password
     }
 
-    const handlePassword = (e) => {
-        setPassword(e.target.value);
-    }
+    register(newUser).then(res => {
+      this.props.history.push(`/login`)
+    })
+  }
 
-    const handleConfirmPassword = (e) => {
-        setConfirmPassword(e.target.value);
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        if (password === confirmPassword) {
-            const newUser = { name, email, password }
-
-            axios.post(`${REACT_APP_SERVER_URL}/api/users/register`, newUser)
-            .then(response => {
-                setRedirect(true);
-            })
-            .catch(error => console.log(error));
-        }
-    }
-
-    if(redirect) return <Redirect to="/login" />
-
-    return(
-        <div className="row mt-4">
-            <div className="col-md-7 offset-md-3">
-                <div className="card card-body">
-                    <h2 className="py-2">Signup</h2>
-                    <form onSubmit={handleSubmit}>
-                        <div className="for-group">
-                            <label htmlFor="name">Name</label>
-                            <input type="text" name="name" value={name} onChange={handleName} className="form-control" />
-                        </div>
-                        <div className="for-group">
-                            <label htmlFor="email">Email</label>
-                            <input type="email" name="email" value={email} onChange={handleEmail} className="form-control" />
-                        </div>
-                        <div className="for-group">
-                            <label htmlFor="password">Password</label>
-                            <input type="password" name="password" value={password} onChange={handlePassword} className="form-control" />
-                        </div>
-                        <div className="for-group">
-                            <label htmlFor="confirmPassword">Confirm Password</label>
-                            <input type="password" name="confirmPassword" value={confirmPassword} onChange={handleConfirmPassword} className="form-control" />
-                        </div>
-                        <button type="submit" className="btn btn-pimary float-right">Submit</button>
-                    </form>
-
-                </div>
-            </div>
+  render() {
+    return (
+      <div className="container">
+        <div className="row">
+          <div className="col-md-6 mt-5 mx-auto">
+            <form noValidate onSubmit={this.onSubmit}>
+              <h1 className="h3 mb-3 font-weight-normal">Register</h1>
+              <div className="form-group">
+                <label htmlFor="name">Name</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="name"
+                  placeholder="Enter your name"
+                  value={this.state.name}
+                  onChange={this.onChange}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="email">Email address</label>
+                <input
+                  type="email"
+                  className="form-control"
+                  name="email"
+                  placeholder="Enter email"
+                  value={this.state.email}
+                  onChange={this.onChange}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="password">Password</label>
+                <input
+                  type="password"
+                  className="form-control"
+                  name="password"
+                  placeholder="Password"
+                  value={this.state.password}
+                  onChange={this.onChange}
+                />
+              </div>
+              <button
+                type="submit"
+                className="btn btn-lg btn-primary btn-block"
+              >
+                Register!
+              </button>
+            </form>
+          </div>
         </div>
+      </div>
     )
+  }
 }
 
-export default Signup;
+export default Register
