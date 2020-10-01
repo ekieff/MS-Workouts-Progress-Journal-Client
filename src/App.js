@@ -6,6 +6,10 @@ import Landing from './components/partials/Landing'
 import Login from './components/user/Login'
 import Register from './components/user/Signup'
 import Profile from './components/user/Profile'
+import Playlist from './components/playlist/Playlist'
+import Exercise from './components/exercise/Exercise'
+import ExerciseId from './components/exercise/ExerciseId'
+import PlaylistId from './components/playlist/PlaylistId'
 
 class App extends Component {
   render() {
@@ -18,6 +22,10 @@ class App extends Component {
             <Route exact path="/signup" component={Register} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/profile" component={Profile} />
+            <Route exact path="/playlist" component={Playlist} />
+            <Route exact path="/exercises" component={Exercise} />
+            <Route exact path="/exercises/:id" component={ExerciseId} />
+            <Route exact path="/playlist/:id" component={PlaylistId} />
           </div>
         </div>
       </Router>
