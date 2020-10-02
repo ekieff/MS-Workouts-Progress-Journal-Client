@@ -8,25 +8,7 @@ class Landing extends Component {
     localStorage.removeItem("usertoken");
     this.props.history.push(`/`);
   }
-  // constructor() {
-  //   super()
-  //   this.state = {
-  //     isAdmin: '',
-  //     name: '',
-  //     email: '',
-  //     errors: {}
-  //   }
-  // }
 
-  // componentDidMount() {
-  //   const token = localStorage.usertoken
-  //   const decoded = jwt_decode(token)
-  //   this.setState({
-  //     name: decoded.name,
-  //     email: decoded.email,
-  //     isAdmin: decoded.isAdmin,
-  //   })
-  // }
 
   render() {
     
@@ -50,6 +32,16 @@ class Landing extends Component {
         <li className="nav-item">
           <Link to="/profile" className="nav-link">
             User
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link to="/playlist" className="nav-link">
+            Playlists
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link to="/exercises" className="nav-link">
+            Exercises
           </Link>
         </li>
         <li className="nav-item">
@@ -110,7 +102,7 @@ class Landing extends Component {
           <ul className="navbar-nav" style={{ float: "left" }}>
             <li className="nav-item">
               <Link to="/" className="nav-link">
-                Main Page
+                Home
               </Link>
             </li>
           </ul>
