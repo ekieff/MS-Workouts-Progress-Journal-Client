@@ -41,7 +41,6 @@ class Exercise extends Component {
           id: decoded.id
         })
       }
-
     render() {
         const exercises = this.state.exercises
         const showExercises = exercises.map((exercise, i) =>{
@@ -50,7 +49,7 @@ class Exercise extends Component {
                     <div className="row">
                     <div className="col-md-6 mt-5 mx-auto">
                 <h1>{exercise.exerciseTitle}</h1>
-                <h3><Link className="viewDetailLink" to= {{pathname: `/exercises/${exercise.id}`}}>Add this exercise to a playlist</Link></h3>
+                <h3><Link className="viewDetailLink" to= {{pathname: `/exercises/${exercise.id}`}}>View this exercise</Link></h3>
                 <button type="submit"
                 className = "btn btn-lg btn-primary btn-block"
                 >Delete this exercise</button>

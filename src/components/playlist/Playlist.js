@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import jwt_decode from 'jwt-decode'
 import axios from 'axios'
-import PlaylistShow from './PlaylistShow.js'
 import {Link} from 'react-router-dom';
 const REACT_APP_SERVER_URL = process.env.REACT_APP_SERVER_URL;
 
@@ -19,7 +18,7 @@ class Playlist extends Component {
             newPlaylist:''
           }
           this.onChange = this.onChange.bind(this)
-            this.onSubmit = this.onSubmit.bind(this)
+            this.onSubmitNew = this.onSubmitNew.bind(this)
         }
 
     playlist = () => {
@@ -51,7 +50,7 @@ class Playlist extends Component {
       onChange(e) {
         this.setState({ [e.target.name]: e.target.value })
       }
-      onSubmit(e) {
+      onSubmitNew(e) {
         e.preventDefault()
     
         const newPlaylist = {
@@ -66,7 +65,6 @@ class Playlist extends Component {
             console.log(err)
         })    
         }
-      
 
     render() {
         const playlists = this.state.playlists
@@ -78,9 +76,12 @@ class Playlist extends Component {
                     <div className="col-md-6 mt-5 mx-auto">
                 <h1>{playlist.name}</h1>
                 <h3><Link className="viewDetailLink" to= {{pathname: `/playlist/${playlist.id}`}}>View this playlist's exercises</Link></h3>
+                {/* <form onSubmit={this.onDelete}>
+                    <input type="hidden" value={playlist.name}></input>
                 <button type="submit"
                 className = "btn btn-lg btn-primary btn-block"
                 >Delete this playlist</button>
+                </form> */}
                 </div>
                 </div>
                 </div>
@@ -93,7 +94,7 @@ class Playlist extends Component {
               <div className="container">
         <div className="row">
           <div className="col-md-6 mt-5 mx-auto">
-            <form noValidate onSubmit={this.onSubmit}>
+            <form noValidate onSubmit={this.onSubmitNew}>
               <h1 className="h3 mb-3 font-weight-normal">Create a new Playlist</h1>
               <div className="form-group">
                 <label htmlFor="name">Name</label>
