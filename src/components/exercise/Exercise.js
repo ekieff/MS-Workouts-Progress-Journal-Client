@@ -15,7 +15,12 @@ class Exercise extends Component {
             isAdmin: '',
             id: '',
             exercises: [],
+            newTitle: '',
+            newType: '',
+            newWebsite:''
         }
+        this.onChange = this.onChange.bind(this)
+        this.onSubmitNew = this.onSubmitNew.bind(this)
     }
     exercise = () => {
         axios.get(`${REACT_APP_SERVER_URL}/exercises/exercise/all`,{
@@ -31,6 +36,9 @@ class Exercise extends Component {
     componentWillMount(){
         this.exercise()
     }
+    onChange(e) {
+        this.setState({ [e.target.name]: e.target.value })
+    }
     componentDidMount() {
         const token = localStorage.usertoken
         const decoded = jwt_decode(token)
@@ -41,6 +49,35 @@ class Exercise extends Component {
           id: decoded.id
         })
       }
+    onSubmitNew(e){
+        e.preventDefault()
+        const newExercise ={
+            exerciseTitle: this.state.newTitle,
+            type: this.state.newType,
+            videoAddress: this.state.newWebsite
+        }
+        axios.post(`${REACT_APP_SERVER_URL}/exercises/exercise/new`, {
+            newExercise:newExercise
+        }).then(response =>{
+            console.log(response)
+        }).catch(err =>{
+            console.log(err)
+        })
+    }
+    onDelete(e){
+        e.preventDefault()
+        const deleteExercise ={
+          ExerciseId: e.target.value
+        }
+        axios.post(`${REACT_APP_SERVER_URL}/exercises/exercise/delete`, {
+          exerciseId: deleteExercise,
+        }).then(response =>{
+          console.log('deleted a playlist')
+        }).catch(err =>{
+          console.log(err)
+        })
+      }
+
     render() {
         const exercises = this.state.exercises
         const showExercises = exercises.map((exercise, i) =>{
@@ -50,8 +87,8 @@ class Exercise extends Component {
                     <div className="col-md-6 mt-5 mx-auto">
                 <h1>{exercise.exerciseTitle}</h1>
                 <h3><Link className="viewDetailLink" to= {{pathname: `/exercises/${exercise.id}`}}>View this exercise</Link></h3>
-                <button type="submit"
-                className = "btn btn-lg btn-primary btn-block"
+                <button type="submit" value ={exercise.id}
+                className = "btn btn-lg btn-primary btn-block" onClick={this.onDelete}
                 >Delete this exercise</button>
                 </div>
                 </div>
@@ -61,6 +98,55 @@ class Exercise extends Component {
       return (
           <div>
               {showExercises}
+              <div className="container">
+        <div className="row">
+          <div className="col-md-6 mt-5 mx-auto">
+            <form noValidate onSubmit={this.onSubmitNew}>
+              <h1 className="h3 mb-3 font-weight-normal">Create a new Exercise</h1>
+              <div className="form-group">
+                <label htmlFor="title">Title</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="newTitle"
+                  placeholder="Enter a new Title"
+                  value={this.state.newTitle}
+                  onChange={this.onChange}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="type">Type</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="newType"
+                  placeholder="Enter a type(seated or standing)"
+                  value={this.state.newType}
+                  onChange={this.onChange}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="website">Website URL</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="newWebsite"
+                  placeholder="Enter the website"
+                  value={this.state.newWebsite}
+                  onChange={this.onChange}
+                />
+              </div>
+              <button
+                type="submit"
+                className="btn btn-lg btn-primary btn-block"
+              >
+                Add another!
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+              
           </div>
       )
     }

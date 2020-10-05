@@ -19,6 +19,7 @@ class Playlist extends Component {
           }
           this.onChange = this.onChange.bind(this)
             this.onSubmitNew = this.onSubmitNew.bind(this)
+            this.onDelete = this.onDelete.bind(this)
         }
 
     playlist = () => {
@@ -66,6 +67,20 @@ class Playlist extends Component {
         })    
         }
 
+
+    onDelete(e){
+      e.preventDefault()
+      const deletePlaylist ={
+        playlistId: e.target.value
+      }
+      axios.post(`${REACT_APP_SERVER_URL}/exercises/playlist/delete`, {
+        playlistId: deletePlaylist,
+      }).then(response =>{
+        console.log('deleted a playlist')
+      }).catch(err =>{
+        console.log(err)
+      })
+    }
     render() {
         const playlists = this.state.playlists
         console.log(playlists)
@@ -76,12 +91,12 @@ class Playlist extends Component {
                     <div className="col-md-6 mt-5 mx-auto">
                 <h1>{playlist.name}</h1>
                 <h3><Link className="viewDetailLink" to= {{pathname: `/playlist/${playlist.id}`}}>View this playlist's exercises</Link></h3>
-                {/* <form onSubmit={this.onDelete}>
+                <form >
                     <input type="hidden" value={playlist.name}></input>
                 <button type="submit"
-                className = "btn btn-lg btn-primary btn-block"
+                className = "btn btn-lg btn-primary btn-block" onClick={this.onDelete} value={playlist.id}
                 >Delete this playlist</button>
-                </form> */}
+                </form> 
                 </div>
                 </div>
                 </div>

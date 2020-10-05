@@ -20,7 +20,7 @@ class PlaylistId extends Component {
           exercises:[{id: '', exerciseTitle:'Sorry there are no exercises right now!'}],
           exerciseId:''
         }
-       
+        this.onDelete = this.onDelete.bind(this)
       }
       
 
@@ -52,17 +52,17 @@ class PlaylistId extends Component {
       }
       onDelete(e){
           e.preventDefault()
-          this.setState ({
-            exerciseId: e.target.input
-          })
+          console.log(this.props.match.params.id)
+          console.log(e)
+          console.log(e.target.value)
           const deleteExercise = {
-              exerciseId: this.state.exerciseId,
+              exerciseId: e.target.value,
               playlistId: this.props.match.params.id
           }
-          axios.delete(`${REACT_APP_SERVER_URL}/exercises/playlistExercises/delete`, {
+          axios.post(`${REACT_APP_SERVER_URL}/exercises/playlistExercises/delete`, {
             deleteExercise: deleteExercise
           }).then(response =>{
-              console.log(response)
+              console.log('deleted connection')
           }).catch(err =>{
               console.log(err)
           })
@@ -78,16 +78,16 @@ class PlaylistId extends Component {
                     <div className="row">
                         <div className="col-md-6 mt-5 mx-auto">
                              <h1>{exercise.exerciseTitle}</h1>
-                             <form onSumbit={this.onDelete}>
-                                 <input type="hidden" value = {exercise.id}/>
                                  <button className = "btn btn-lg btn-primary btn-block"
                                          ><Link className="viewDetailLink" to={{pathname:`/exercises/${exercise.id}`}}>View this exercise</Link>
                                      </button>
-                                     <button type="submit"
-                                         className = "btn btn-lg btn-primary btn-block"
-                                         >Remove this exercise
-                                     </button>
-                             </form>
+                                     <form value={exercise.id}>
+                                         <input type='hidden' value = {exercise.id}/>
+                                            <button type="submit"
+                                                className = "btn btn-lg btn-primary btn-block" value={exercise.id} onClick={this.onDelete}
+                                                >Remove this exercise
+                                            </button>
+                                    </form>
                          </div>
                      </div>
                  </div>
