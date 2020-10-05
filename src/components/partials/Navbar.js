@@ -66,17 +66,7 @@ class Landing extends Component {
       </ul>
     );
 
-    function displayNav(){
-      if (localStorage.usertoken){
-        if (this.state.isAdmin){
-          return userLink
-        } else {
-          return adminLink
-        }
-      } else {
-        return loginRegLink
-      }
-    }
+    
     return (
       <nav
         className="navbar navbar-expand-lg navbar-dark bg-dark rounded"

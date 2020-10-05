@@ -10,6 +10,7 @@ import Playlist from './components/playlist/Playlist'
 import Exercise from './components/exercise/Exercise'
 import ExerciseId from './components/exercise/ExerciseId'
 import PlaylistId from './components/playlist/PlaylistId'
+import NotFoundPage from './components/user/NotFoundPage'
 
 class App extends Component {
   render() {
@@ -26,6 +27,7 @@ class App extends Component {
             <Route exact path="/exercises" component={Exercise} />
             <Route exact path="/exercises/:id" component={ExerciseId} />
             <Route exact path="/playlist/:id" component={PlaylistId} />
+            {/* <NotFoundPage /> */}
           </div>
         </div>
       </Router>

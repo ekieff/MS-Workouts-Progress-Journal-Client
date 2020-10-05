@@ -97,7 +97,7 @@ class ExerciseId extends Component {
         e.preventDefault()
 
         axios.post(`${REACT_APP_SERVER_URL}/exercises/playlistExercises/new`, {
-            playlistId: parseInt(this.state.newPlaylist),
+            playlistId: this.state.newPlaylist,
             exerciseId: parseInt(this.state.exerciseId)
         }).then(response =>{
             console.log('Created')

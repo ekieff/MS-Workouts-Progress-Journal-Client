@@ -79,7 +79,7 @@ class PlaylistId extends Component {
                         <div className="col-md-6 mt-5 mx-auto">
                              <h1>{exercise.exerciseTitle}</h1>
                                  <button className = "btn btn-lg btn-primary btn-block"
-                                         ><Link className="viewDetailLink" to={{pathname:`/exercises/${exercise.id}`}}>View this exercise</Link>
+                                         ><Link className="viewDetailLink" to={{pathname:`/exercises/${exercise.id}`}} style= {{color: '#FFFFFF'}}>View this exercise</Link>
                                      </button>
                                      {this.state.isAdmin ? 
                                      <form value={exercise.id}>
