@@ -106,19 +106,9 @@ class ExerciseId extends Component {
         })
     }
     render() {
-        
-      return (
-          <div>
-        <div className ="container">
-                    <div className="row">
-                    <div className="col-md-6 mt-5 mx-auto">
-                        <h1>{this.state.exerciseTitle}</h1>
-                        <h3>Type: {this.state.type}</h3>
-                        <p>{this.state.videoAddress}</p>
-                    </div>
-                    </div>
-                    </div>
-                    <form onSubmit ={this.onDelete}>
+    const adminLinks =(
+      <div>
+      <form onSubmit ={this.onDelete}>
                     <button type="submit"
                 className = "btn btn-lg btn-primary btn-block"
                 >Delete this exercise</button>
@@ -193,6 +183,21 @@ class ExerciseId extends Component {
           </div>
         </div>
       </div>
+      </div>
+    )
+        
+      return (
+          <div>
+        <div className ="container">
+                    <div className="row">
+                    <div className="col-md-6 mt-5 mx-auto">
+                        <h1>{this.state.exerciseTitle}</h1>
+                        <h3>Type: {this.state.type}</h3>
+                        <p>{this.state.videoAddress}</p>
+                    </div>
+                    </div>
+                    </div>
+          {this.state.isAdmin ? adminLinks : <div></div>}
         </div>
         
       )

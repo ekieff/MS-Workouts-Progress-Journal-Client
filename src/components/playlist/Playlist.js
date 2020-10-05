@@ -91,47 +91,53 @@ class Playlist extends Component {
                     <div className="col-md-6 mt-5 mx-auto">
                 <h1>{playlist.name}</h1>
                 <h3><Link className="viewDetailLink" to= {{pathname: `/playlist/${playlist.id}`}}>View this playlist's exercises</Link></h3>
+                {this.state.isAdmin ? 
                 <form >
                     <input type="hidden" value={playlist.name}></input>
                 <button type="submit"
                 className = "btn btn-lg btn-primary btn-block" onClick={this.onDelete} value={playlist.id}
                 >Delete this playlist</button>
                 </form> 
+                  : <div></div>}
                 </div>
                 </div>
                 </div>
             )
         })
+        const adminLinks=(
+        
+        <div className="container">
+  <div className="row">
+    <div className="col-md-6 mt-5 mx-auto">
+      <form noValidate onSubmit={this.onSubmitNew}>
+        <h1 className="h3 mb-3 font-weight-normal">Create a new Playlist</h1>
+        <div className="form-group">
+          <label htmlFor="name">Name</label>
+          <input
+            type="text"
+            className="form-control"
+            name="newPlaylist"
+            placeholder="Enter a new name"
+            value={this.state.newPlaylist}
+            onChange={this.onChange}
+          />
+        </div>
+        <button
+          type="submit"
+          className="btn btn-lg btn-primary btn-block"
+        >
+          Add another!
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+)
     
       return (
           <div>
               {showPlaylists}
-              <div className="container">
-        <div className="row">
-          <div className="col-md-6 mt-5 mx-auto">
-            <form noValidate onSubmit={this.onSubmitNew}>
-              <h1 className="h3 mb-3 font-weight-normal">Create a new Playlist</h1>
-              <div className="form-group">
-                <label htmlFor="name">Name</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="newPlaylist"
-                  placeholder="Enter a new name"
-                  value={this.state.newPlaylist}
-                  onChange={this.onChange}
-                />
-              </div>
-              <button
-                type="submit"
-                className="btn btn-lg btn-primary btn-block"
-              >
-                Add another!
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
+             {this.state.isAdmin ? adminLinks :<div></div> }
           </div>
       )
     }

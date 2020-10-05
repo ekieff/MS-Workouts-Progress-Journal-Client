@@ -81,6 +81,7 @@ class PlaylistId extends Component {
                                  <button className = "btn btn-lg btn-primary btn-block"
                                          ><Link className="viewDetailLink" to={{pathname:`/exercises/${exercise.id}`}}>View this exercise</Link>
                                      </button>
+                                     {this.state.isAdmin ? 
                                      <form value={exercise.id}>
                                          <input type='hidden' value = {exercise.id}/>
                                             <button type="submit"
@@ -88,6 +89,7 @@ class PlaylistId extends Component {
                                                 >Remove this exercise
                                             </button>
                                     </form>
+                                    : <div></div>}
                          </div>
                      </div>
                  </div>

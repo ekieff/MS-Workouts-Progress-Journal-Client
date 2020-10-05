@@ -7,7 +7,13 @@ class Profile extends Component {
     this.state = {
       name: '',
       email: '',
-      errors: {}
+      errors: {},
+      start:'',
+      end:'',
+      timezone:'',
+      title:'',
+      description:'',
+      location:'',
     }
   }
 
@@ -22,6 +28,7 @@ class Profile extends Component {
 
   render() {
     return (
+  <div>
       <div className="container">
         <div className="jumbotron mt-5">
           <div className="col-sm-8 mx-auto">
@@ -41,6 +48,16 @@ class Profile extends Component {
           </table>
         </div>
       </div>
+      <div title="Add to Calendar" class="addeventatc">
+        Make an appointment to stay committed to your health!
+        <span class="start">04/26/2020 06:00 PM</span>
+        <span class="end">04/26/2020 11:00 PM</span>
+        <span class="timezone">America/Los_Angeles</span>
+        <span class="title">Spending 30 minutes with MS Workouts</span>
+        <span class="description">I'm taking the fight to the muscles!</span>
+        <span class="location">'www.msworkouts.com/progressjournal'</span>
+  </div>
+</div>
     )
   }
 }

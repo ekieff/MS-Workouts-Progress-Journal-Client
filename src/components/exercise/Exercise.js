@@ -87,18 +87,18 @@ class Exercise extends Component {
                     <div className="col-md-6 mt-5 mx-auto">
                 <h1>{exercise.exerciseTitle}</h1>
                 <h3><Link className="viewDetailLink" to= {{pathname: `/exercises/${exercise.id}`}}>View this exercise</Link></h3>
+                {this.state.isAdmin ? 
                 <button type="submit" value ={exercise.id}
                 className = "btn btn-lg btn-primary btn-block" onClick={this.onDelete}
                 >Delete this exercise</button>
+                : <div></div>}
                 </div>
                 </div>
                 </div>
             )
         })
-      return (
-          <div>
-              {showExercises}
-              <div className="container">
+        const adminLinks =(
+            <div className="container">
         <div className="row">
           <div className="col-md-6 mt-5 mx-auto">
             <form noValidate onSubmit={this.onSubmitNew}>
@@ -146,6 +146,12 @@ class Exercise extends Component {
           </div>
         </div>
       </div>
+
+        )
+      return (
+          <div>
+              {showExercises}
+              {this.state.isAdmin ? adminLinks : <div></div>}
               
           </div>
       )
