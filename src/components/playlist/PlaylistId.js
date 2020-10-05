@@ -16,10 +16,11 @@ class PlaylistId extends Component {
           errors: {},
           isAdmin: '',
           id: '',
-          playlist: [],
-          exercises:[],
+          playlistName: '',
+          exercises:[{id: '', exerciseTitle:'Sorry there are no exercises right now!'}],
           exerciseId:''
         }
+       
       }
       
 
@@ -28,7 +29,8 @@ class PlaylistId extends Component {
             playlistId: this.props.match.params.id
         }).then(response =>{
             this.setState({
-                playlist: response.data
+                playlistName: response.data.playlistName,
+                exercises: response.data.exerciseList
             })
         }).catch (err =>{
             console.log(err)
@@ -68,44 +70,42 @@ class PlaylistId extends Component {
 
 
     render() {
-        const playlist = this.state.playlist
-        const showPlaylist = playlist.map((playlist, i) =>{
-            return (
-                <div className ="container">
-                    <div className="row">
-                    <div className="col-md-6 mt-5 mx-auto">
-                <h1>{playlist.name}</h1>
-                </div>
-                </div>
-                </div>
-            )
-        })
-        const exercises = this.state.playlist
-        
-        const showExercises = exercises.map((exercise, i) =>{
+       
+        console.log(this.state.exercises)
+        const showExercises = this.state.exercises.map((exercise, i) =>{
             return(
                 <div className ="container">
                     <div className="row">
-                    <div className="col-md-6 mt-5 mx-auto">
-                <h1>{exercise.exercises.exerciseTitle}</h1>
-                <form onSumbit={this.onDelete}>
-            <input type ="hidden">{exercise.exercises.id}</input>
-                <button type="submit"
-                className = "btn btn-lg btn-primary btn-block"
-                >Remove this exercise</button>
-                </form>
-                </div>
-                </div>
-                </div>
-            )
+                        <div className="col-md-6 mt-5 mx-auto">
+                             <h1>{exercise.exerciseTitle}</h1>
+                             <form onSumbit={this.onDelete}>
+                                 <input type="hidden" value = {exercise.id}/>
+                                 <button className = "btn btn-lg btn-primary btn-block"
+                                         ><Link className="viewDetailLink" to={{pathname:`/exercises/${exercise.id}`}}>View this exercise</Link>
+                                     </button>
+                                     <button type="submit"
+                                         className = "btn btn-lg btn-primary btn-block"
+                                         >Remove this exercise
+                                     </button>
+                             </form>
+                         </div>
+                     </div>
+                 </div>
+                ) 
         })
+        
 
         return (
             <div>
-          {showPlaylist}
-          {showExercises}
-          
-          </div>
+                <div className ="container">
+                    <div className="row">
+                        <div className="col-md-6 mt-5 mx-auto">
+                            <h1>{this.state.playlistName}</h1>
+                        </div>
+                    </div>
+                </div>
+               {showExercises}
+            </div>
         )
     }
 }
